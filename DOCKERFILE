@@ -10,7 +10,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the API script and the saved model directory
 COPY app.py .
-COPY models/ ./models/
+COPY model.pkl .
 
 # Expose the port Uvicorn will run on
 EXPOSE 8000

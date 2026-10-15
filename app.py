@@ -4,7 +4,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 # 1. Load the model globally so it's ready when the API starts
-MODEL_PATH = "models/model.pkl"
+MODEL_PATH = "model.pkl"
 try:
     model = joblib.load(MODEL_PATH)
 except Exception as e:
