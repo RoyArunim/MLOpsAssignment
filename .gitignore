@@ -23,27 +23,10 @@ env/
 .DS_Store
 .vscode/
 
-# Model artifacts (optional)
-*.pkl
-*.joblib
-*.pt
-*.pth
-
-# Python virtual environment and cache
-.venv/
-__pycache__/
-*.py[cod]
-
-# MLflow experiment tracking artifacts
+# MLflow tracking artifacts
 mlruns/
 
-# Jupyter temporary files
-.ipynb_checkpoints/
-
-# Secrets
-.env
-.env.*
-!.env.example
-
-# macOS
-.DS_Store
+# Large model artifacts (ignore these extensions only if needed)
+# *.joblib
+# *.pt
+# *.pth
