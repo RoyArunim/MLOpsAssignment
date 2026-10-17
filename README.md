@@ -158,7 +158,7 @@ scrape_configs:
 EOF
 
 # Run the Prometheus container
-docker run -d --name prometheus-dashboard -p 9090:9090 -v $(pwd)/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus
+docker run -d --name prometheus-dashboard --network host -v $(pwd)/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus
 
 
 Access the dashboard by navigating to http://localhost:9090 in your web browser. Type http_requests_total in the search bar and click the Graph tab to view your API traffic visually.
