@@ -1,0 +1,42 @@
+name: Heart Disease MLOps Pipeline
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build-and-train:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+        cache: 'pip'
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install nbconvert ipykernel
+
+    - name: Run Notebook and Generate Model
+      run: |
+        # Convert the notebook to a standard Python script
+        jupyter nbconvert --to script Assignment.ipynb
+        
+        # Execute the script to train the model and generate model.pkl
+        python Assignment.py
+
+    - name: Upload Model Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: trained-model-artifact
+        path: model.pkl
+        retention-days: 5
