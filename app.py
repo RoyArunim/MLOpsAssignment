@@ -1,9 +1,18 @@
+import logging
+import time
 import joblib
 import pandas as pd
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, Request, HTTPException
 from pydantic import BaseModel
+from prometheus_fastapi_instrumentator import Instrumentator
 
-# 1. Load the model globally so it's ready when the API starts
+
+
+# Setup Structured Logging
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+logger = logging.getLogger(__name__)
+
+#  Load the model globally so it's ready when the API starts
 MODEL_PATH = "model.pkl"
 try:
     model = joblib.load(MODEL_PATH)
@@ -11,10 +20,22 @@ except Exception as e:
     model = None
     print(f"Warning: Could not load model from {MODEL_PATH}. Error: {e}")
 
-# 2. Initialize FastAPI
+# Initialize FastAPI
 app = FastAPI(title="Heart Disease Risk Prediction API")
 
-# 3. Define the expected JSON input schema
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    start_time = time.time()
+    response = await call_next(request)
+    process_time = (time.time() - start_time) * 1000 # Convert to milliseconds
+    logger.info(f"Method: {request.method} | Path: {request.url.path} | Status: {response.status_code} | Time: {process_time:.2f}ms")
+    return response
+
+
+Instrumentator().instrument(app).expose(app)
+
+
+# Define the expected JSON input schema
 class PatientData(BaseModel):
     age: float
     sex: int
