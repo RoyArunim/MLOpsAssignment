@@ -53,7 +53,7 @@ python train.py
 
 Build the production Docker image. We use a specific version tag (v3) to avoid Kubernetes aggressive caching issues with :latest.
 
-docker build -t heart-disease-api:v3 .
+docker build -f DOCKERFILE -t heart-disease-api:v3 .
 
 
 ☸️ Step 3: Kubernetes Deployment (Minikube)
