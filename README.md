@@ -55,6 +55,14 @@ Build the production Docker image. We use a specific version tag (v3) to avoid K
 
 docker build -f DOCKERFILE -t heart-disease-api:v3 .
 
+Install minikube and kubectl
+# 1. Download and install Minikube
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+
+# 2. Download and install kubectl
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
 ☸️ Step 3: Kubernetes Deployment (Minikube)
 
