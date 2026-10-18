@@ -9,3 +9,4 @@ prometheus-fastapi-instrumentator==7.0.0
 mlflow==3.1.4
 seaborn==0.13.2
 ucimlrepo==0.0.7
+matplotlib==3.9.4
